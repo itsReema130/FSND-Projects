@@ -22,7 +22,7 @@ moment = Moment(app)
 app.config.from_object('config')
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-migrate = Migrate(app, db)
+migrate = Migrate(app , db)
 # Done: connect to a local postgresql database
 
 #----------------------------------------------------------------------------#
