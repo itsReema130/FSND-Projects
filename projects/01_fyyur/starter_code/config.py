@@ -11,3 +11,4 @@ DEBUG = True
 
 # DONE: IMPLEMENT DATABASE URL
 SQLALCHEMY_DATABASE_URI = 'postgresql://reemaalhammadi@localhost:5432/artapp'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
