@@ -137,8 +137,10 @@ def venues():
         data.append({"city": area.city, 
         "state": area.state, 
         "venues": VenuesData})
-    print(data) 
+
     return render_template('pages/venues.html', areas=data);
+
+    
 
 @app.route('/venues/search', methods=['POST'])
 def search_venues():
@@ -214,7 +216,7 @@ def create_venue_submission():
   new_venue.address = request.form['address']
   new_venue.phone = request.form['phone']
   new_venue.image_link = request.form['image_link']
-  new_venue.genres = request.getlist('genres')
+  new_venue.genres = request.form['genres']
   new_venue.facebook_link = request.form['facebook_link']
   new_venue.website = request.form['website_link']
   new_venue.seeking_talent = True if 'seeking_talent' in request.form else False
@@ -360,7 +362,7 @@ def edit_artist_submission(artist_id):
     newArtistData.city = request.form['city']
     newArtistData.state = request.form['state']
     newArtistData.phone = request.form['phone']
-    newArtistData.genres = request.form.getlist('genres')
+    newArtistData.genres = request.form['genres']
     newArtistData.image_link = request.form['image_link']
     newArtistData.facebook_link = request.form['facebook_link']
     newArtistData.website= request.form['website_link']
@@ -416,7 +418,7 @@ def edit_venue_submission(venue_id):
     newVenuetData.address =request.form['address']
     newVenuetData.phone = request.form['phone']
     newVenuetData.image_link = request.form['image_link']
-    newVenuetData.genres = request.form.getlist('genres')
+    newVenuetData.genres = request.form['genres']
     newVenuetData.facebook_link = request.form['facebook_link']
     newVenuetData.website= request.form['website_link']
     newVenuetData.seeking_venue = True if 'seeking_venue' in request.form else False 
@@ -492,14 +494,6 @@ def shows():
   # displays list of shows at /shows
   # Done: replace with real venues data.
   #       num_shows should be aggregated based on number of upcoming shows per venue.
-  data=[{
-    "venue_id": 1,
-    "venue_name": "The Musical Hop",
-    "artist_id": 4,
-    "artist_name": "Guns N Petals",
-    "artist_image_link": "https://images.unsplash.com/photo-1549213783-8284d0336c4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=300&q=80",
-    "start_time": "2019-05-21T21:30:00.000Z"
-  }]
   ShowsData = db.session.query(Show).join(Artist).join(Venue).all()
   Datalist=[]
   for show in ShowsData: 
