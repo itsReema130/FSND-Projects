@@ -108,7 +108,6 @@ def search_venues():
 def show_venue(venue_id):
   # shows the venue page with the given venue_id
   # DONE: replace with real venue data from the venues table, using venue_id
-    ven = db.session.query(Venue).get(venue_id)
     show_query = db.session.query(Show).join(Venue).filter(venue_id == Show.venue_id)
     venue = Venue.query.get_or_404(venue_id)
 
@@ -116,7 +115,7 @@ def show_venue(venue_id):
     upcoming_shows = []
     
 
-    for show in venue.shows:
+    for show in show_query:
         temp_show = {
             'artist_id': show.artist_id,
             'artist_name': show.artist.name,
@@ -135,18 +134,18 @@ def show_venue(venue_id):
         data['past_shows_count'] = len(past_shows)
         data['upcoming_shows_count'] = len(upcoming_shows)  
     DataV = {
-        'id': ven.id,
-        'name': ven.name,
-        'genres': ven.genres,
-        'address': ven.address,
-        'city': ven.city,
-        'state': ven.state,
-        'phone': ven.phone,
-        'facebook_link': ven.facebook_link,
-        'website_link': ven.website,
-        'seeking_talent': ven.seeking_talent,
-        'seeking_description': ven.seeking_description,
-        'image_link': ven.image_link,
+        'id': venue.id,
+        'name': venue.name,
+        'genres': venue.genres,
+        'address': venue.address,
+        'city': venue.city,
+        'state': venue.state,
+        'phone': venue.phone,
+        'facebook_link': venue.facebook_link,
+        'website_link': venue.website,
+        'seeking_talent': venue.seeking_talent,
+        'seeking_description': venue.seeking_description,
+        'image_link': venue.image_link,
         'past_shows': past_shows,
         'upcoming_shows': upcoming_shows,
         'past_shows_count': len(past_shows),
