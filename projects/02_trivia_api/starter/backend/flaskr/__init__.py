@@ -10,14 +10,24 @@ QUESTIONS_PER_PAGE = 10
 
 def create_app(test_config=None):
   # create and configure the app
-  app = Flask(__name__)
+  app = Flask(__name__, instance_relative_config=True)
+  CORS(app)
+  cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
   setup_db(app)
+
+@app.after_request
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        response.headers.add('Access-Control-Allow-Headers', 'GET, POST, PATCH, DELETE, OPTION')
+        return response
   
   '''
+  Done
   @TODO: Set up CORS. Allow '*' for origins. Delete the sample route after completing the TODOs
   '''
 
   '''
+  Done
   @TODO: Use the after_request decorator to set Access-Control-Allow
   '''
 
