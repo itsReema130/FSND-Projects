@@ -43,7 +43,7 @@ def create_app(test_config=None):
   @app.route('/categories', methods=['GET'])
   def get_categories():
 
-    categories = Category.query.all()
+    categories = Category.query.order_by(Category.id).all()
     CategoryData = {}
     for category in categories:
       CategoryData[category.id] = category.type
