@@ -83,17 +83,17 @@ class TriviaTestCase(unittest.TestCase):
     # # Delete Quesiton
     # # *************************
 
-    # # Delete Question
+    # Delete Question
     # test to delete existing q
-    # def test_delete_question(self):
-    #     QID = 26
-    #     res = self.client().delete(f'/questions/{QID}')
-    #     data = json.loads(res.data)
-    #     question = Question.query.filter(Question.id == QID).one_or_none()     
-    #     self.assertEqual(res.status_code, 200)
-    #     self.assertEqual(data['success'], True)
-    #     self.assertEqual(data['deleted'], QID)
-    #     self.assertEqual(question, None)
+    def test_delete_question(self):
+        QID = 26
+        res = self.client().delete(f'/questions/{QID}')
+        data = json.loads(res.data)
+        question = Question.query.filter(Question.id == QID).one_or_none()     
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertEqual(data['deleted'], QID)
+        self.assertEqual(question, None)
 
     #  Tes delete method with non exist question
     def test_422_if_question_does_not_exist(self):
