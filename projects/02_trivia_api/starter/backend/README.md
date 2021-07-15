@@ -77,31 +77,248 @@ One note before you delve into your tasks: for each endpoint, you are expected t
 
 
 
-## Review Comment to the Students
-```
-This README is missing documentation of your endpoints. Below is an example for your endpoint to get all categories. Please use it as a reference for creating your documentation and resubmit your code. 
 
-Endpoints
-GET '/api/v1.0/categories'
-GET ...
-POST ...
-DELETE ...
 
-GET '/api/v1.0/categories'
+
+
+# Endpoints
+- GET '/categories'
+- GET '/questions'
+- POST '/questions'
+- DELETE '/questions'
+- POST '/questions/search'
+- GET '/categories/{category_id}/questions'
+- POST '/quizzes'
+
+## GET '/categories'
 - Fetches a dictionary of categories in which the keys are the ids and the value is the corresponding string of the category
 - Request Arguments: None
 - Returns: An object with a single key, categories, that contains a object of id: category_string key:value pairs. 
-{'1' : "Science",
-'2' : "Art",
-'3' : "Geography",
-'4' : "History",
-'5' : "Entertainment",
-'6' : "Sports"}
+- Sample ``curl http://127.0.0.1:5000/categories ``
+- Sample output:
+````
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "success": true
+}
+````
 
+## GET '/questions'
+- Fetches a set of questions 10 per page 
+- Request Arguments: None
+- Returns: 
+    - an objict of categories with there ids
+    - an objict of questions  with there answer, category, difficulty level and the question
+    - a success flag 
+    - the total number of questions
+- sample ``` curl http://127.0.0.1:5000/questions ```
+- smaple output
+```
+{
+    "categories": {
+        "1": "Science",
+        "2": "Art",
+        "3": "Geography",
+        "4": "History",
+        "5": "Entertainment",
+        "6": "Sports"
+    },
+    "current_category": null,
+    "questions": [
+        {
+            "answer": "Brazil",
+            "category": 6,
+            "difficulty": 3,
+            "id": 10,
+            "question": "Which is the only team to play in every soccer World Cup tournament?"
+        },
+        {
+            "answer": "Uruguay",
+            "category": 6,
+            "difficulty": 4,
+            "id": 11,
+            "question": "Which country won the first ever soccer World Cup in 1930?"
+        },
+        {
+            "answer": "George Washington Carver",
+            "category": 4,
+            "difficulty": 2,
+            "id": 12,
+            "question": "Who invented Peanut Butter?"
+        },
+        {
+            "answer": "Lake Victoria",
+            "category": 3,
+            "difficulty": 2,
+            "id": 13,
+            "question": "What is the largest lake in Africa?"
+        },
+        {
+            "answer": "The Palace of Versailles",
+            "category": 3,
+            "difficulty": 3,
+            "id": 14,
+            "question": "In which royal palace would you find the Hall of Mirrors?"
+        },
+        {
+            "answer": "Agra",
+            "category": 3,
+            "difficulty": 2,
+            "id": 15,
+            "question": "The Taj Mahal is located in which Indian city?"
+        },
+        {
+            "answer": "Escher",
+            "category": 2,
+            "difficulty": 1,
+            "id": 16,
+            "question": "Which Dutch graphic artist–initials M C was a creator of optical illusions?"
+        },
+        {
+            "answer": "Mona Lisa",
+            "category": 2,
+            "difficulty": 3,
+            "id": 17,
+            "question": "La Giaconda is better known as what?"
+        },
+        {
+            "answer": "One",
+            "category": 2,
+            "difficulty": 4,
+            "id": 18,
+            "question": "How many paintings did Van Gogh sell in his lifetime?"
+        },
+        {
+            "answer": "Jackson Pollock",
+            "category": 2,
+            "difficulty": 2,
+            "id": 19,
+            "question": "Which American artist was a pioneer of Abstract Expressionism, and a leading exponent of action painting?"
+        }
+    ],
+    "success": true,
+    "total_questions": 18
+}
+``` 
+
+## POST '/questions'
+- Creates a new questions using the submitted question, answer, category, and difficulty.
+- returns:
+    - success flag 
+    - total number of available questions
+- Sample:
+ ``
+ curl http://127.0.0.1:5000/questions -X POST -H "Content-Type: application/json" -d '{"question":"How many times did Chandler and Janice break up during the entirety of Friends?", "answer":"5 times", "category":"5", "difficulty":"4"}'
+ ``
+- sample output 
+```
+{
+  "created": 29, 
+  "success": true
+}
 ```
 
+## DELETE '/questions/{question_id}'
+ - Deletes the question of the given ID if it exists. Returns the id of the deleted question, and success value
+ - sample ``curl -X DELETE http://127.0.0.1:5000/questions/25 ``
+ - sample output 
+ ````
+ {
+  "deleted": 25, 
+  "success": true
+}
+````
+## POST '/questions/search'
+- a serche endpoint to Searches for questions using the submitted search term. 
+- sample :
+``curl http://127.0.0.1:5000/questions/search -X POST -H "Content-Type: application/json" -d '{"searchTerm": "Friends"}'``
+- sample output
+````
+{
+  "current_category": [
+    5
+  ], 
+  "questions": [
+    {
+      "answer": "5 times", 
+      "category": 5, 
+      "difficulty": 4, 
+      "id": 29, 
+      "question": "How many times did Chandler and Janice break up during the entirety of Friends?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 1
+}
 
-## Testing
+````
+## GET '/categories/{category_id}/questions'
+- fetches questions based on category id.
+- sample: ``curl http://127.0.0.1:5000/categories/3/questions``
+- sample output:
+````
+{
+  "categories": {
+    "1": "Science", 
+    "2": "Art", 
+    "3": "Geography", 
+    "4": "History", 
+    "5": "Entertainment", 
+    "6": "Sports"
+  }, 
+  "current_category": null, 
+  "questions": [
+    {
+      "answer": "Lake Victoria", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 13, 
+      "question": "What is the largest lake in Africa?"
+    }, 
+    {
+      "answer": "The Palace of Versailles", 
+      "category": 3, 
+      "difficulty": 3, 
+      "id": 14, 
+      "question": "In which royal palace would you find the Hall of Mirrors?"
+    }, 
+    {
+      "answer": "Agra", 
+      "category": 3, 
+      "difficulty": 2, 
+      "id": 15, 
+      "question": "The Taj Mahal is located in which Indian city?"
+    }
+  ], 
+  "success": true, 
+  "total_questions": 3
+}
+
+````
+## POST /quizzes
+-  fetches questions to play a quiz Game.
+- sample `` curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type: application/json" -d '{"previous_questions": [], "quiz_category": {"type": "Science", "id": "5"}}' ``
+- sample output :
+````
+{
+  "question": {
+    "answer": "Prefix letters fe", 
+    "category": 5, 
+    "difficulty": 2, 
+    "id": 28, 
+    "question": "What is the difference between mail and femail"
+  }
+}
+````
+
+# Testing
 To run the tests, run
 ```
 dropdb trivia_test
