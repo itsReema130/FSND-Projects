@@ -79,8 +79,9 @@ def create_app(test_config=None):
                 "success": True,
                 "deleted": question.id,
             })
-     except:
-      abort(422)
+     except Exception as e:   
+            print(e)           
+            abort(422)
 
 #   DONE:Create an endpoint to POST a new question, 
   @app.route('/questions', methods=['POST'])
